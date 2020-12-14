@@ -10,10 +10,13 @@ set incsearch         " show incremental search results as you type
 set hlsearch          " highlight search results
 set scrolloff=10      " keep cursor centered on screen
 set mouse=a           " allow scrolling thru vim with scrollwheel
+set ttymouse=xterm2
+let mapleader = ","
 
 autocmd InsertEnter * set cul         " Display line under current inserting line
 autocmd InsertLeave * set nocul
 autocmd BufWritePre *.js :%s/\s\+$//e " Remove trailing whitespace
+highlight Search cterm=NONE ctermfg=white ctermbg=grey
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -30,8 +33,10 @@ Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'othree/html5.vim'
 Plugin 'valloric/youcompleteme'
 Plugin 'vim-airline/vim-airline'
-Plugin 'roman/golden-ratio'
 Plugin 'rgrinberg/vim-ocaml'
+Plugin 'yuttie/comfortable-motion.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'mg979/vim-visual-multi'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -52,11 +57,12 @@ filetype plugin indent on    " required
 "set background=dark
 "colorscheme solarized
 
-map <C-n> :NERDTreeToggle<CR>
-
 " misc plugin settings
+" map <C-n> :NERDTreeToggle<CR>
+nmap <leader>n :NERDTreeToggle<CR>
+map <leader>/ <plug>NERDCommenterToggle
 let g:ycm_autoclose_preview_window_after_completion = 1
-let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinPos = "left"
 let g:NERDSpaceDelims = 1
 let g:airline#extensions#tabline#enabled = 1
 
@@ -71,6 +77,8 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_ocaml_checkers = ['merlin']
 highlight SyntasticErrorSign guifg=white guibg=red
+nnoremap <silent> <C-d> :call comfortable_motion#flick(50)<CR>
+nnoremap <silent> <C-u> :call comfortable_motion#flick(-50)<CR>
 
 " ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
 let s:opam_share_dir = system("opam config var share")
