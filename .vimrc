@@ -34,6 +34,7 @@ Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'othree/html5.vim'
 Plugin 'valloric/youcompleteme'
 Plugin 'vim-airline/vim-airline'
+Plugin 'enricobacis/vim-airline-clock'
 Plugin 'rgrinberg/vim-ocaml'
 Plugin 'yuttie/comfortable-motion.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -59,13 +60,13 @@ filetype plugin indent on    " required
 "colorscheme solarized
 
 " misc plugin settings
-" map <C-n> :NERDTreeToggle<CR>
 map <leader>l :NERDTreeToggle<CR>
 map <leader>/ <plug>NERDCommenterToggle
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:NERDTreeWinPos = "left"
 let g:NERDSpaceDelims = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#clock#format = 'T:%H:%M'
 
 " Syntastic settings
 " To check avaiable checkers for current filetype in vim use :SyntasticInfo
