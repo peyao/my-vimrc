@@ -12,6 +12,7 @@ set scrolloff=10      " keep cursor centered on screen
 set mouse=a           " allow scrolling thru vim with scrollwheel
 set ttymouse=xterm2
 let mapleader = ","
+syntax enable
 
 autocmd InsertEnter * set cul         " Display line under current inserting line
 autocmd InsertLeave * set nocul
@@ -59,7 +60,7 @@ filetype plugin indent on    " required
 
 " misc plugin settings
 " map <C-n> :NERDTreeToggle<CR>
-nmap <leader>n :NERDTreeToggle<CR>
+map <leader>l :NERDTreeToggle<CR>
 map <leader>/ <plug>NERDCommenterToggle
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:NERDTreeWinPos = "left"
