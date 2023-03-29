@@ -58,11 +58,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- set vim options here!!!
-local set = vim.opt
-set.tabstop = 4
-set.softtabstop = 4
-
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
