@@ -411,7 +411,10 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
+  
+  tsserver = {},
+  
+  quick_lint_js = {},
 
   lua_ls = {
     Lua = {
