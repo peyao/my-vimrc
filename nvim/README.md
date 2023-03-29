@@ -13,4 +13,7 @@
   * <C-x> : Go to file as split
   * <C-v> : Go to file as vsplit
   * <C-t> : Go to file as tab
+* <g> <c> <c> : comment line
+* <Space> <f> <c> : Show current file (in dir tree)
+* <Space> <f> <f> : Show dir tree
 ```
