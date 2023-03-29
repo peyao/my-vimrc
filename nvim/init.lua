@@ -1,4 +1,4 @@
---[[
+[
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -41,6 +41,9 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -106,7 +109,7 @@ require('lazy').setup({
         add = { text = '+' },
         change = { text = '~' },
         delete = { text = '_' },
-        topdelete = { text = '‾' },
+        topdelete = { text = '‚Äæ' },
         changedelete = { text = '~' },
       },
     },
@@ -127,6 +130,7 @@ require('lazy').setup({
       options = {
         icons_enabled = false,
         theme = 'onedark',
+        -- theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
@@ -138,7 +142,7 @@ require('lazy').setup({
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
     opts = {
-      char = '┊',
+      char = '‚îä',
       show_trailing_blankline_indent = false,
     },
   },
@@ -182,6 +186,26 @@ require('lazy').setup({
   --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
   --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
   -- { import = 'custom.plugins' },
+
+  -- peyao :
+  -- { 'folke/tokyonight.nvim', -- custom theme
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'tokyonight-moon'
+  --   end,
+  -- },
+  { 'dstein64/nvim-scrollview' }, -- adds scrollbar to the right
+  { 'terrortylor/nvim-comment' }, -- add commenter
+  { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer 
+  { 'romgrk/barbar.nvim',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    opts = {
+      -- lazy.nvim can automatically call setup for you. just put your options here:
+      insert_at_start = true,
+      animation = true,
+    },
+  },
+
 }, {})
 
 -- [[ Setting options ]]
@@ -411,11 +435,11 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  
+
   tsserver = {
     filetypes = { 'javascript', 'typescript', 'typescriptreact', 'typescript.tsx' }
   },
-  
+
   quick_lint_js = {},
 
   lua_ls = {
@@ -497,6 +521,11 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- nvim-tree empty setup using defaults
+require('nvim-tree').setup()
+vim.keymap.set('n', '<leader>ff', ':NvimTreeToggle<cr>', { desc = 'Show/Hide Files' });
+vim.keymap.set('n', '<leader>fc', ':NvimTreeFindFile<cr>', { desc = 'Show Current File' });
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
