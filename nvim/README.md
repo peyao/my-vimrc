@@ -8,8 +8,8 @@
 ## Shortcuts
 
 ```
-* <Space> <S> <F> : Searches files
-* <Space> <S> <G> : Grep
+* <Space> <s> <f> : Search files
+* <Space> <s> <g> : Grep files
   * <C-x> : Go to file as split
   * <C-v> : Go to file as vsplit
   * <C-t> : Go to file as tab
