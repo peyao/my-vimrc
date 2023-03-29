@@ -412,7 +412,9 @@ local servers = {
   -- pyright = {},
   -- rust_analyzer = {},
   
-  tsserver = {},
+  tsserver = {
+    filetypes = { 'javascript', 'typescript', 'typescriptreact', 'typescript.tsx' }
+  },
   
   quick_lint_js = {},
 
