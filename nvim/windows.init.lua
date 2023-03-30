@@ -61,11 +61,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- set vim options here!!!
-local set = vim.opt
-set.tabstop = 4
-set.softtabstop = 4
-
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -235,6 +230,11 @@ require('lazy').setup({
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
+-- Set tab config
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -317,7 +317,7 @@ vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
-    previewer = false,
+    -- previewer = false,
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
@@ -551,12 +551,12 @@ vim.keymap.set('n', '<leader>t', '<Cmd>NvimTreeToggle<cr>', { desc = 'File Tree 
 
 -- nvim-tree open on startup
 -- https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup
-local function open_nvim_tree()
-  -- open the tree
-  require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
-
-end
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+-- local function open_nvim_tree()
+--   -- open the tree
+--   require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
+--
+-- end
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 -- barbar.nvim keymaps:
 local bufferMap = vim.api.nvim_set_keymap
