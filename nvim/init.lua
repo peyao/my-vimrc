@@ -127,9 +127,9 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       -- light:
-      vim.cmd.colorscheme 'tokyonight-day'
+      -- vim.cmd.colorscheme 'tokyonight-day'
       -- dark:
-      -- vim.cmd.colorscheme 'tokyonight-moon'
+      vim.cmd.colorscheme 'tokyonight-moon'
 
       -- not so good contrast:
       -- vim.cmd.colorscheme 'tokyonight-moon'
@@ -216,9 +216,19 @@ require('lazy').setup({
   { 'karb94/neoscroll.nvim' },
   { 'rmagatti/auto-session',
     config = function()
-      require("auto-session").setup {}
+      require('auto-session').setup {}
     end
-  }
+  },
+  {
+    'tzachar/local-highlight.nvim',
+    config = function()
+      require('local-highlight').setup({
+        file_types = {'javascript', 'typescript'},
+        hlgroup = 'Search',
+        cw_hlgroup = nil,
+      })
+    end
+  },
 
 }, {})
 
