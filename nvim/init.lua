@@ -1,4 +1,4 @@
-[
+--[[
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -115,11 +115,25 @@ require('lazy').setup({
     },
   },
 
-  { -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+  -- { -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
+
+  { 'folke/tokyonight.nvim', -- custom theme
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      -- light:
+      -- vim.cmd.colorscheme 'tokyonight-day'
+      -- dark:
+      vim.cmd.colorscheme 'tokyonight-moon'
+
+      -- not so good contrast:
+      -- vim.cmd.colorscheme 'tokyonight-moon'
+      -- vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
 
@@ -129,8 +143,8 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
-        -- theme = 'auto',
+        -- theme = 'onedark',
+        theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
@@ -188,12 +202,6 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 
   -- peyao :
-  -- { 'folke/tokyonight.nvim', -- custom theme
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'tokyonight-moon'
-  --   end,
-  -- },
   { 'dstein64/nvim-scrollview' }, -- adds scrollbar to the right
   { 'terrortylor/nvim-comment' }, -- add commenter
   { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer 
@@ -205,6 +213,12 @@ require('lazy').setup({
       animation = true,
     },
   },
+  { 'karb94/neoscroll.nvim' },
+  { 'rmagatti/auto-session',
+    config = function()
+      require("auto-session").setup {}
+    end
+  }
 
 }, {})
 
@@ -298,7 +312,7 @@ vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
-    previewer = false,
+    -- previewer = false,
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
@@ -523,18 +537,59 @@ cmp.setup {
 }
 
 -- nvim-tree empty setup using defaults
-require('nvim-tree').setup()
-vim.keymap.set('n', '<leader>ff', ':NvimTreeToggle<cr>', { desc = 'Show/Hide Files' });
-vim.keymap.set('n', '<leader>fc', ':NvimTreeFindFile<cr>', { desc = 'Show Current File' });
+require('nvim-tree').setup({
+  view = {
+    width = 40,
+    preserve_window_proportions = true,
+  },
+  update_focused_file = {
+    enable = true,
+    update_root = false,
+    ignore_list = {},
+  },
+})
+vim.keymap.set('n', '<leader>t', '<Cmd>NvimTreeToggle<cr>', { desc = 'File Tree [T]oggle', silent = true });
+-- vim.keymap.set('n', '<leader>tf', ':NvimTreeFindFile<cr>', { desc = 'File Tree Show Current [F]ile', silent = true });
+-- vim.keymap.set('n', '<leader>to', ':NvimTreeOpen<cr>', { desc = 'File Tree [O]pen', silent = true });
+-- vim.keymap.set('n', '<leader>tc', ':NvimTreeClose<cr>', { desc = 'File Tree [C]lose', silent = true });
+
+-- barbar.nvim keymaps:
+local bufferMap = vim.api.nvim_set_keymap
+local bufferOpts = { noremap = true, silent = true }
+-- Move to previous/next
+bufferMap('n', '<M-,>', '<Cmd>BufferPrevious<CR>', bufferOpts)
+bufferMap('n', '<M-.>', '<Cmd>BufferNext<CR>', bufferOpts)
+-- Sort automatically by...
+bufferMap('n', '<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', bufferOpts)
+bufferMap('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', bufferOpts)
+bufferMap('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', bufferOpts)
+bufferMap('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', bufferOpts)
+
+-- neoscroll setup
+require('neoscroll').setup({
+    -- All these keys will be mapped to their corresponding default scrolling animation
+    mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+                '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
+    hide_cursor = true,          -- Hide cursor while scrolling
+    stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+    respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+    cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+    easing_function = nil,       -- Default easing function
+    pre_hook = nil,              -- Function to run before the scrolling animation starts
+    post_hook = nil,             -- Function to run after the scrolling animation ends
+    performance_mode = false,    -- Disable "Performance Mode" on all buffers.
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
 vim.api.nvim_exec('language en_US', true)
 
-if vim.g.neovide then
-  -- neovide config
+-- session save shortcut (Alt-s) (disabled, now using autosession)
+-- vim.keymap.set('n', '<M-s>', '<Cmd>mks! ~/neps<CR>')
 
+-- neovide config
+if vim.g.neovide then
   vim.o.guifont = "Iosevka:h16"
   vim.g.neovide_transparency = 0.95
   vim.g.neovide_refresh_rate = 240
@@ -542,7 +597,6 @@ if vim.g.neovide then
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_cursor_antialiasing = true
   vim.g.neovide_cursor_vfx_mode = "ripple"
-
   -- vim.g.neovide_scroll_animation_length = 0
   -- vim.g.neovide_scale_factor = 1.2
 end
