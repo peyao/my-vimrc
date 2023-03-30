@@ -203,7 +203,6 @@ require('lazy').setup({
 
   -- peyao :
   { 'dstein64/nvim-scrollview' }, -- adds scrollbar to the right
-  { 'terrortylor/nvim-comment' }, -- add commenter
   { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer 
   { 'romgrk/barbar.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
