@@ -127,9 +127,9 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       -- light:
-      -- vim.cmd.colorscheme 'tokyonight-day'
+      vim.cmd.colorscheme 'tokyonight-day'
       -- dark:
-      vim.cmd.colorscheme 'tokyonight-moon'
+      -- vim.cmd.colorscheme 'tokyonight-moon'
 
       -- not so good contrast:
       -- vim.cmd.colorscheme 'tokyonight-moon'
@@ -540,7 +540,6 @@ cmp.setup {
 require('nvim-tree').setup({
   view = {
     width = 40,
-    preserve_window_proportions = true,
   },
   update_focused_file = {
     enable = true,
@@ -549,9 +548,15 @@ require('nvim-tree').setup({
   },
 })
 vim.keymap.set('n', '<leader>t', '<Cmd>NvimTreeToggle<cr>', { desc = 'File Tree [T]oggle', silent = true });
--- vim.keymap.set('n', '<leader>tf', ':NvimTreeFindFile<cr>', { desc = 'File Tree Show Current [F]ile', silent = true });
--- vim.keymap.set('n', '<leader>to', ':NvimTreeOpen<cr>', { desc = 'File Tree [O]pen', silent = true });
--- vim.keymap.set('n', '<leader>tc', ':NvimTreeClose<cr>', { desc = 'File Tree [C]lose', silent = true });
+
+-- nvim-tree open on startup
+-- https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup
+local function open_nvim_tree()
+  -- open the tree
+  require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
+
+end
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 -- barbar.nvim keymaps:
 local bufferMap = vim.api.nvim_set_keymap
@@ -560,10 +565,10 @@ local bufferOpts = { noremap = true, silent = true }
 bufferMap('n', '<M-,>', '<Cmd>BufferPrevious<CR>', bufferOpts)
 bufferMap('n', '<M-.>', '<Cmd>BufferNext<CR>', bufferOpts)
 -- Sort automatically by...
-bufferMap('n', '<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', bufferOpts)
-bufferMap('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', bufferOpts)
-bufferMap('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', bufferOpts)
-bufferMap('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', bufferOpts)
+bufferMap('n', '<Space>bs', '<Cmd>BufferOrderByDirectory<CR>', { desc = '[B]uffers [S]ort by Directory', silent = true })
+-- bufferMap('n', '<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', bufferOpts)
+-- bufferMap('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', bufferOpts)
+-- bufferMap('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', bufferOpts)
 
 -- neoscroll setup
 require('neoscroll').setup({
