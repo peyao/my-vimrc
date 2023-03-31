@@ -580,8 +580,8 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 local bufferMap = vim.api.nvim_set_keymap
 local bufferOpts = { noremap = true, silent = true }
 -- Move to previous/next
-bufferMap('n', '<A-;>', '<Cmd>BufferPrevious<CR>', bufferOpts)
-bufferMap('n', '<A-\'>', '<Cmd>BufferNext<CR>', bufferOpts)
+bufferMap('n', '<A-,>', '<Cmd>BufferPrevious<CR>', bufferOpts)
+bufferMap('n', '<A-.>', '<Cmd>BufferNext<CR>', bufferOpts)
 bufferMap('n', '<A-a>', '<Cmd>BufferMovePrevious<CR>', bufferOpts)
 bufferMap('n', '<A-d>', '<Cmd>BufferMoveNext<CR>', bufferOpts)
 bufferMap('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', bufferOpts)
