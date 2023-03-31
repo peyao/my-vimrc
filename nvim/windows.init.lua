@@ -595,7 +595,7 @@ vim.api.nvim_exec('language en_US', true)
 if vim.g.neovide then
   -- neovide config
 
-  vim.o.guifont = "Iosevka:h14"
+  vim.o.guifont = "Iosevka NF:h16"
   vim.g.neovide_transparency = 0.98
   vim.g.neovide_refresh_rate = 120
   vim.g.neovide_refresh_rate_idle = 5
