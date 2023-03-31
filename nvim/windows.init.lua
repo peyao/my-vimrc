@@ -109,24 +109,10 @@ require('lazy').setup({
         add = { text = '+' },
         change = { text = '~' },
         delete = { text = '_' },
-        topdelete = { text = '‾' },
+        topdelete = { text = '‚Äæ' },
         changedelete = { text = '~' },
       },
     },
-  },
-
-  { 'folke/tokyonight.nvim', -- custom theme
-    priority = 1000,
-    config = function()
-      -- light:
-      vim.cmd.colorscheme 'tokyonight-day'
-      -- dark:
-      -- vim.cmd.colorscheme 'tokyonight-moon'
-
-      -- not so good contrast:
-      -- vim.cmd.colorscheme 'tokyonight-moon'
-      -- vim.cmd.colorscheme 'tokyonight-night'
-    end,
   },
 
   -- { -- Theme inspired by Atom
@@ -136,6 +122,20 @@ require('lazy').setup({
   --     vim.cmd.colorscheme 'onedark'
   --   end,
   -- },
+
+  { 'folke/tokyonight.nvim', -- custom theme
+    priority = 1000,
+    config = function()
+      -- light:
+      -- vim.cmd.colorscheme 'tokyonight-day'
+      -- dark:
+      vim.cmd.colorscheme 'tokyonight-moon'
+
+      -- not so good contrast:
+      -- vim.cmd.colorscheme 'tokyonight-moon'
+      -- vim.cmd.colorscheme 'tokyonight-night'
+    end,
+  },
 
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -156,7 +156,7 @@ require('lazy').setup({
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
     opts = {
-      char = '┊',
+      char = '‚îä',
       show_trailing_blankline_indent = false,
     },
   },
@@ -200,7 +200,10 @@ require('lazy').setup({
   --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
   --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
   -- { import = 'custom.plugins' },
+
+  -- peyao :
   { 'dstein64/nvim-scrollview' }, -- adds scrollbar to the right
+  { 'terrortylor/nvim-comment' }, -- add commenter
   { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer 
   { 'romgrk/barbar.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
@@ -208,14 +211,17 @@ require('lazy').setup({
       -- lazy.nvim can automatically call setup for you. just put your options here:
       insert_at_start = true,
       animation = true,
+      icons = {
+        pinned = {button = 'Ô§Ç'},
+      }
     },
   },
   { 'karb94/neoscroll.nvim' },
-  -- { 'rmagatti/auto-session',
-  --   config = function()
-  --     require('auto-session').setup {}
-  --   end
-  -- },
+  { 'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {}
+    end
+  },
   {
     'tzachar/local-highlight.nvim',
     config = function()
@@ -226,15 +232,17 @@ require('lazy').setup({
       })
     end
   },
+
 }, {})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
--- Set tab config
+-- peyao : own configs
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
+vim.o.cursorline = true
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -332,7 +340,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'help', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'tsx', 'typescript', 'help', 'vim', 'javascript' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -455,7 +463,12 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
+
+  tsserver = {
+    filetypes = { 'javascript', 'typescript', 'typescriptreact', 'typescript.tsx' }
+  },
+
+  quick_lint_js = {},
 
   lua_ls = {
     Lua = {
@@ -540,31 +553,49 @@ cmp.setup {
 -- nvim-tree empty setup using defaults
 require('nvim-tree').setup({
   view = {
-    width = 40,
+    width = 39,
   },
   update_focused_file = {
     enable = true,
     update_root = false,
     ignore_list = {},
   },
+  ui = {
+    confirm = {
+      remove = true, -- user confirmation when using removing ("d") on an item
+    }
+  }
 })
 vim.keymap.set('n', '<leader>t', '<Cmd>NvimTreeToggle<cr>', { desc = 'File Tree [T]oggle', silent = true });
 
 -- nvim-tree open on startup
 -- https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup
--- local function open_nvim_tree()
---   -- open the tree
---   require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
---
--- end
--- vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+local function open_nvim_tree()
+  -- open the tree
+  require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
+end
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 -- barbar.nvim keymaps:
 local bufferMap = vim.api.nvim_set_keymap
 local bufferOpts = { noremap = true, silent = true }
 -- Move to previous/next
-bufferMap('n', '<M-,>', '<Cmd>BufferPrevious<CR>', bufferOpts)
-bufferMap('n', '<M-.>', '<Cmd>BufferNext<CR>', bufferOpts)
+bufferMap('n', '<A-,>', '<Cmd>BufferPrevious<CR>', bufferOpts)
+bufferMap('n', '<A-.>', '<Cmd>BufferNext<CR>', bufferOpts)
+bufferMap('n', '<A-a>', '<Cmd>BufferMovePrevious<CR>', bufferOpts)
+bufferMap('n', '<A-d>', '<Cmd>BufferMoveNext<CR>', bufferOpts)
+-- bufferMap('n', '<A-A>', '<Cmd>BufferMovePrevious<CR>', bufferOpts)
+-- bufferMap('n', '<A-D>', '<Cmd>BufferMoveNext<CR>', bufferOpts)
+bufferMap('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', bufferOpts)
+bufferMap('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', bufferOpts)
+bufferMap('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', bufferOpts)
+bufferMap('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', bufferOpts)
+bufferMap('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', bufferOpts)
+bufferMap('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', bufferOpts)
+bufferMap('n', '<A-6>', '<Cmd>BufferLast<CR>', bufferOpts)
+bufferMap('n', '<A-p>', '<Cmd>BufferPin<CR>', bufferOpts)
+bufferMap('n', '<A-w>', '<Cmd>BufferClose<CR>', bufferOpts)
+bufferMap('n', '<A-c>', '<Cmd>BufferCloseAllButCurrent<CR>', bufferOpts)
 -- Sort automatically by...
 bufferMap('n', '<Space>bs', '<Cmd>BufferOrderByDirectory<CR>', { desc = '[B]uffers [S]ort by Directory', silent = true })
 -- bufferMap('n', '<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', bufferOpts)
@@ -586,23 +617,23 @@ require('neoscroll').setup({
     performance_mode = false,    -- Disable "Performance Mode" on all buffers.
 })
 
-
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
 vim.api.nvim_exec('language en_US', true)
 
-if vim.g.neovide then
-  -- neovide config
+-- session save shortcut (Alt-s) (disabled, now using autosession)
+-- vim.keymap.set('n', '<M-s>', '<Cmd>mks! ~/neps<CR>')
 
-  vim.o.guifont = "Iosevka NF:h16"
-  vim.g.neovide_transparency = 0.98
-  vim.g.neovide_refresh_rate = 120
+-- neovide config
+if vim.g.neovide then
+  vim.o.guifont = "Iosevka:h16"
+  vim.g.neovide_transparency = 0.95
+  vim.g.neovide_refresh_rate = 240
   vim.g.neovide_refresh_rate_idle = 5
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_cursor_antialiasing = true
   vim.g.neovide_cursor_vfx_mode = "ripple"
-
   -- vim.g.neovide_scroll_animation_length = 0
   -- vim.g.neovide_scale_factor = 1.2
 end
