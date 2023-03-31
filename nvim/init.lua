@@ -109,7 +109,7 @@ require('lazy').setup({
         add = { text = '+' },
         change = { text = '~' },
         delete = { text = '_' },
-        topdelete = { text = '‚Äæ' },
+        topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
     },
@@ -156,7 +156,7 @@ require('lazy').setup({
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
     opts = {
-      char = '‚îä',
+      char = '┊',
       show_trailing_blankline_indent = false,
     },
   },
@@ -204,7 +204,7 @@ require('lazy').setup({
   -- peyao :
   { 'dstein64/nvim-scrollview' }, -- adds scrollbar to the right
   { 'terrortylor/nvim-comment' }, -- add commenter
-  { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer 
+  { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer
   { 'romgrk/barbar.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
     opts = {
@@ -212,7 +212,7 @@ require('lazy').setup({
       insert_at_start = true,
       animation = true,
       icons = {
-        pinned = {button = 'Ô§Ç'},
+        pinned = {button = '車'},
       }
     },
   },
