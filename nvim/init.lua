@@ -580,12 +580,10 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 local bufferMap = vim.api.nvim_set_keymap
 local bufferOpts = { noremap = true, silent = true }
 -- Move to previous/next
-bufferMap('n', '<A-,>', '<Cmd>BufferPrevious<CR>', bufferOpts)
-bufferMap('n', '<A-.>', '<Cmd>BufferNext<CR>', bufferOpts)
+bufferMap('n', '<A-;>', '<Cmd>BufferPrevious<CR>', bufferOpts)
+bufferMap('n', '<A-\'>', '<Cmd>BufferNext<CR>', bufferOpts)
 bufferMap('n', '<A-a>', '<Cmd>BufferMovePrevious<CR>', bufferOpts)
 bufferMap('n', '<A-d>', '<Cmd>BufferMoveNext<CR>', bufferOpts)
--- bufferMap('n', '<A-A>', '<Cmd>BufferMovePrevious<CR>', bufferOpts)
--- bufferMap('n', '<A-D>', '<Cmd>BufferMoveNext<CR>', bufferOpts)
 bufferMap('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', bufferOpts)
 bufferMap('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', bufferOpts)
 bufferMap('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', bufferOpts)
@@ -597,10 +595,10 @@ bufferMap('n', '<A-p>', '<Cmd>BufferPin<CR>', bufferOpts)
 bufferMap('n', '<A-w>', '<Cmd>BufferClose<CR>', bufferOpts)
 bufferMap('n', '<A-c>', '<Cmd>BufferCloseAllButCurrent<CR>', bufferOpts)
 -- Sort automatically by...
-bufferMap('n', '<Space>bs', '<Cmd>BufferOrderByDirectory<CR>', { desc = '[B]uffers [S]ort by Directory', silent = true })
+bufferMap('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', { desc = '[B]uffers sort by [D]irectory', silent = true })
+bufferMap('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', { desc = '[B]uffers sort by [L]anguage', silent = true })
+-- bufferMap('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', { desc = '[B]uffers sort by [W]indow #', silent = true })
 -- bufferMap('n', '<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', bufferOpts)
--- bufferMap('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', bufferOpts)
--- bufferMap('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', bufferOpts)
 
 -- neoscroll setup
 require('neoscroll').setup({
