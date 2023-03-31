@@ -1,5 +1,10 @@
 # nvim config readme
 
+Installation:
+* Fonts: https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka
+* bins: gcc, cmake (basically mingw stuff if on windows, or brew can install missing bins on mac)
+
+
 * init.lua began from: https://github.com/nvim-lua/kickstart.nvim
 * YouTube video: https://www.youtube.com/watch?v=stqUbv-5u2s
 * Added [neovide](https://github.com/neovide/neovide) support
