@@ -623,15 +623,17 @@ vim.api.nvim_exec('language en_US', true)
 -- session save shortcut (Alt-s) (disabled, now using autosession)
 -- vim.keymap.set('n', '<M-s>', '<Cmd>mks! ~/neps<CR>')
 
--- neovide config
 if vim.g.neovide then
-  vim.o.guifont = "Iosevka:h16"
-  vim.g.neovide_transparency = 0.95
-  vim.g.neovide_refresh_rate = 240
+  -- neovide config
+
+  vim.o.guifont = "Iosevka NF:h16"
+  vim.g.neovide_transparency = 0.98
+  vim.g.neovide_refresh_rate = 120
   vim.g.neovide_refresh_rate_idle = 5
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_cursor_antialiasing = true
   vim.g.neovide_cursor_vfx_mode = "ripple"
+
   -- vim.g.neovide_scroll_animation_length = 0
   -- vim.g.neovide_scale_factor = 1.2
 end
