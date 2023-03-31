@@ -4,6 +4,7 @@
 
 * Fonts: https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka
 * bins: gcc, cmake (basically mingw stuff if on windows, or brew can install missing bins on mac)
+* For iTerm2, need to check the "+Esc" to have the option-key work with shortcuts
 
 ## Notes
 
