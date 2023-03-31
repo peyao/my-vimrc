@@ -119,9 +119,9 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       -- light:
-      -- vim.cmd.colorscheme 'tokyonight-day'
+      vim.cmd.colorscheme 'tokyonight-day'
       -- dark:
-      vim.cmd.colorscheme 'tokyonight-moon'
+      -- vim.cmd.colorscheme 'tokyonight-moon'
 
       -- not so good contrast:
       -- vim.cmd.colorscheme 'tokyonight-moon'
@@ -129,13 +129,13 @@ require('lazy').setup({
     end,
   },
 
-  { -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
-  },
+  -- { -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
 
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -143,7 +143,8 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        -- theme = 'onedark',
+        theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
@@ -210,11 +211,11 @@ require('lazy').setup({
     },
   },
   { 'karb94/neoscroll.nvim' },
-  { 'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {}
-    end
-  },
+  -- { 'rmagatti/auto-session',
+  --   config = function()
+  --     require('auto-session').setup {}
+  --   end
+  -- },
   {
     'tzachar/local-highlight.nvim',
     config = function()
@@ -594,9 +595,9 @@ vim.api.nvim_exec('language en_US', true)
 if vim.g.neovide then
   -- neovide config
 
-  vim.o.guifont = "Iosevka:h16"
-  vim.g.neovide_transparency = 0.95
-  vim.g.neovide_refresh_rate = 240
+  vim.o.guifont = "Iosevka:h14"
+  vim.g.neovide_transparency = 0.98
+  vim.g.neovide_refresh_rate = 120
   vim.g.neovide_refresh_rate_idle = 5
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_cursor_antialiasing = true
