@@ -127,9 +127,9 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       -- light:
-      -- vim.cmd.colorscheme 'tokyonight-day'
+      vim.cmd.colorscheme 'tokyonight-day'
       -- dark:
-      vim.cmd.colorscheme 'tokyonight-moon'
+      -- vim.cmd.colorscheme 'tokyonight-moon'
 
       -- not so good contrast:
       -- vim.cmd.colorscheme 'tokyonight-moon'
@@ -204,7 +204,7 @@ require('lazy').setup({
   -- peyao :
   { 'dstein64/nvim-scrollview' }, -- adds scrollbar to the right
   { 'terrortylor/nvim-comment' }, -- add commenter
-  { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer
+  { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer 
   { 'romgrk/barbar.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
     opts = {
@@ -232,6 +232,12 @@ require('lazy').setup({
       })
     end
   },
+  { 'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup {}
+    end
+  }, -- open/close parens/brackets together
+  { 'windwp/nvim-ts-autotag' } -- open/close html/jsx tags together
 
 }, {})
 
@@ -312,7 +318,7 @@ require('telescope').setup {
         ['<C-u>'] = false,
         ['<C-d>'] = false,
       },
-    },
+    }
   },
 }
 
@@ -321,7 +327,8 @@ pcall(require('telescope').load_extension, 'fzf')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+-- vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader><space>', require('telescope.builtin').resume, { desc = '[ ] Resume Telescope search' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -400,6 +407,9 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
+  autotag = {
+    enable = true
+  }
 }
 
 -- Diagnostic keymaps
@@ -468,7 +478,8 @@ local servers = {
     filetypes = { 'javascript', 'typescript', 'typescriptreact', 'typescript.tsx' }
   },
 
-  quick_lint_js = {},
+  -- quick_lint_js = {},
+  eslint = {},
 
   lua_ls = {
     Lua = {
@@ -570,11 +581,11 @@ vim.keymap.set('n', '<leader>t', '<Cmd>NvimTreeToggle<cr>', { desc = 'File Tree 
 
 -- nvim-tree open on startup
 -- https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup
-local function open_nvim_tree()
-  -- open the tree
-  require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
-end
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+-- local function open_nvim_tree()
+--   -- open the tree
+--   require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
+-- end
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 -- barbar.nvim keymaps:
 local bufferMap = vim.api.nvim_set_keymap
