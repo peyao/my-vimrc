@@ -42,8 +42,9 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- nvim-tree recommends disabling these, but this stops :GBrowse from working
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -456,6 +457,11 @@ local on_attach = function(_, bufnr)
   nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
+
+  -- git keybinds
+  nmap('<leader>co', '<Cmd>GBrowse<CR>', '[C]ode [O]pen in GitHub')
+  nmap('<leader>cd', '<Cmd>Gvdiffsplit<CR>', '[C]ode Git [D]iff in vsplit')
+
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
