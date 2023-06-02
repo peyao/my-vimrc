@@ -128,9 +128,9 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       -- light:
-      vim.cmd.colorscheme 'tokyonight-day'
+      -- vim.cmd.colorscheme 'tokyonight-day'
       -- dark:
-      -- vim.cmd.colorscheme 'tokyonight-moon'
+      vim.cmd.colorscheme 'tokyonight-moon'
 
       -- not so good contrast:
       -- vim.cmd.colorscheme 'tokyonight-moon'
@@ -166,7 +166,7 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -207,13 +207,17 @@ require('lazy').setup({
   { 'terrortylor/nvim-comment' }, -- add commenter
   { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer 
   { 'romgrk/barbar.nvim',
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    dependencies = {
+      'lewis6991/gitsigns.nvim',
+      'nvim-tree/nvim-web-devicons'
+    },
     opts = {
       -- lazy.nvim can automatically call setup for you. just put your options here:
       insert_at_start = true,
       animation = true,
       icons = {
-        pinned = {button = '車'},
+        pinned = {button = '📌', filename = true},
+        button = '✖',
       }
     },
   },
@@ -250,6 +254,7 @@ vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.cursorline = true
+vim.o.autoread = true
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -338,6 +343,7 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
+-- vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -348,7 +354,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'tsx', 'typescript', 'help', 'vim', 'javascript' },
+  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'tsx', 'typescript', 'vimdoc', 'vim', 'javascript' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -571,6 +577,12 @@ cmp.setup {
 require('nvim-tree').setup({
   view = {
     width = 39,
+    float = {
+      enable = true,
+      open_win_config = {
+        width = 60
+      }
+    },
   },
   update_focused_file = {
     enable = true,
@@ -607,7 +619,10 @@ bufferMap('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', bufferOpts)
 bufferMap('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', bufferOpts)
 bufferMap('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', bufferOpts)
 bufferMap('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', bufferOpts)
-bufferMap('n', '<A-6>', '<Cmd>BufferLast<CR>', bufferOpts)
+bufferMap('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', bufferOpts)
+bufferMap('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', bufferOpts)
+bufferMap('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', bufferOpts)
+bufferMap('n', '<A-0>', '<Cmd>BufferGoto 10<CR>', bufferOpts)
 bufferMap('n', '<A-p>', '<Cmd>BufferPin<CR>', bufferOpts)
 bufferMap('n', '<A-w>', '<Cmd>BufferClose<CR>', bufferOpts)
 bufferMap('n', '<A-c>', '<Cmd>BufferCloseAllButCurrent<CR>', bufferOpts)
