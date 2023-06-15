@@ -116,6 +116,8 @@ require('lazy').setup({
     },
   },
 
+  -- Themes
+  --
   -- { -- Theme inspired by Atom
   --   'navarasu/onedark.nvim',
   --   priority = 1000,
@@ -123,14 +125,16 @@ require('lazy').setup({
   --     vim.cmd.colorscheme 'onedark'
   --   end,
   -- },
-
+  { 'projekt0n/github-nvim-theme' }, -- custom theme
   { 'folke/tokyonight.nvim', -- custom theme
     priority = 1000,
     config = function()
       -- light:
       -- vim.cmd.colorscheme 'tokyonight-day'
       -- dark:
-      vim.cmd.colorscheme 'tokyonight-moon'
+      -- vim.cmd.colorscheme 'tokyonight-moon'
+      -- github:
+      vim.cmd.colorscheme 'github_dark'
 
       -- not so good contrast:
       -- vim.cmd.colorscheme 'tokyonight-moon'
