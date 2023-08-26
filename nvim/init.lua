@@ -42,9 +42,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- nvim-tree recommends disabling these, but this stops :GBrowse from working
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -88,7 +87,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim', opts = {}, tag = 'legacy' },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -125,16 +124,17 @@ require('lazy').setup({
   --     vim.cmd.colorscheme 'onedark'
   --   end,
   -- },
+
   { 'projekt0n/github-nvim-theme' }, -- custom theme
+
   { 'folke/tokyonight.nvim', -- custom theme
     priority = 1000,
     config = function()
       -- light:
-      -- vim.cmd.colorscheme 'tokyonight-day'
+      vim.cmd.colorscheme 'tokyonight-day'
       -- dark:
       -- vim.cmd.colorscheme 'tokyonight-moon'
-      -- github:
-      vim.cmd.colorscheme 'github_dark'
+      -- vim.cmd.colorscheme 'github_dark'
 
       -- not so good contrast:
       -- vim.cmd.colorscheme 'tokyonight-moon'
@@ -170,7 +170,7 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -209,7 +209,7 @@ require('lazy').setup({
   -- peyao :
   { 'dstein64/nvim-scrollview' }, -- adds scrollbar to the right
   { 'terrortylor/nvim-comment' }, -- add commenter
-  { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer 
+  { 'nvim-tree/nvim-tree.lua' }, -- add file directory explorer
   { 'romgrk/barbar.nvim',
     dependencies = {
       'lewis6991/gitsigns.nvim',
@@ -226,11 +226,11 @@ require('lazy').setup({
     },
   },
   { 'karb94/neoscroll.nvim' },
-  { 'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {}
-    end
-  },
+  -- { 'rmagatti/auto-session',
+  --   config = function()
+  --     require('auto-session').setup {}
+  --   end
+  -- },
   {
     'tzachar/local-highlight.nvim',
     config = function()
@@ -328,7 +328,8 @@ require('telescope').setup {
         ['<C-u>'] = false,
         ['<C-d>'] = false,
       },
-    }
+    },
+    file_ignore_patterns = { 'node_modules', 'yarn.lock', 'package-lock.json' }
   },
 }
 
@@ -342,12 +343,11 @@ vim.keymap.set('n', '<leader><space>', require('telescope.builtin').resume, { de
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
+    winblend = 0,
     -- previewer = false,
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
--- vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -358,7 +358,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'tsx', 'typescript', 'vimdoc', 'vim', 'javascript' },
+  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'tsx', 'typescript', 'help', 'vim', 'javascript' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -472,7 +472,6 @@ local on_attach = function(_, bufnr)
   nmap('<leader>co', '<Cmd>GBrowse<CR>', '[C]ode [O]pen in GitHub')
   nmap('<leader>cd', '<Cmd>Gvdiffsplit<CR>', '[C]ode Git [D]iff in vsplit')
 
-
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
@@ -494,7 +493,6 @@ local servers = {
     filetypes = { 'javascript', 'typescript', 'typescriptreact', 'typescript.tsx' }
   },
 
-  -- quick_lint_js = {},
   eslint = {},
 
   lua_ls = {
@@ -581,12 +579,6 @@ cmp.setup {
 require('nvim-tree').setup({
   view = {
     width = 39,
-    float = {
-      enable = true,
-      open_win_config = {
-        width = 60
-      }
-    },
   },
   update_focused_file = {
     enable = true,
